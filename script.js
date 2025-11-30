@@ -1,25 +1,31 @@
-//your JS code here. If required.
- const textToRender = "We love Programming!";
+const fullText = "We love Programming!";
     const textElement = document.getElementById("text");
     const speedInput = document.getElementById("speed");
-    const startBtn = document.getElementById("startBtn");
 
-    startBtn.addEventListener("click", () => {
-      let speed = parseInt(speedInput.value);
+    let index = 0;
+    let intervalId;
 
-      if (speed < 1) speed = 1;
-      if (speed > 10) speed = 10;
+    function startTyping() {
+      clearInterval(intervalId);
 
+      const speed = Number(speedInput.value) || 1;
       const delay = 500 / speed;
-      textElement.textContent = "";  
-      let index = 0;
 
-      const interval = setInterval(() => {
-        textElement.textContent += textToRender[index];
+      index = 0;
+      textElement.textContent = "";
+
+      intervalId = setInterval(() => {
+        textElement.textContent += fullText[index];
         index++;
 
-        if (index >= textToRender.length) {
-          clearInterval(interval);
+        if (index >= fullText.length) {
+          clearInterval(intervalId);
         }
       }, delay);
-    });
+    }
+
+    // Start immediately when the page loads
+    startTyping();
+
+    // If speed changes → restart typing automatically
+    speedInput.addEventListener("input", startTyping);
