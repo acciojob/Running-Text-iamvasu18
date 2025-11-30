@@ -2,17 +2,16 @@ const fullText = "We love Programming!";
     const textElement = document.getElementById("text");
     const speedInput = document.getElementById("speed");
 
-    let index = 0;
     let intervalId;
+    let index = 0;
 
     function startTyping() {
       clearInterval(intervalId);
+      textElement.textContent = "";
+      index = 0;
 
       const speed = Number(speedInput.value) || 1;
       const delay = 500 / speed;
-
-      index = 0;
-      textElement.textContent = "";
 
       intervalId = setInterval(() => {
         textElement.textContent += fullText[index];
@@ -24,8 +23,8 @@ const fullText = "We love Programming!";
       }, delay);
     }
 
-    // Start immediately when the page loads
+    // Start when page loads
     startTyping();
 
-    // If speed changes → restart typing automatically
-    speedInput.addEventListener("input", startTyping);
+    // START ONLY AFTER USER FINISHES TYPING THE SPEED
+    speedInput.addEventListener("change", startTyping);
